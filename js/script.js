@@ -27,10 +27,15 @@ jQuery(document).ready(function($) {
 		var date_val = $('#acf-field_54f28f849b8ed').val();
 		// var date = new Date( date_val.substring(0,4), date_val.substring(3,2), date_val.substring(5,2) );
 		var date_string = month[parseInt(date_val.substring(4,6))-1] + ' ' + date_val.substring(6,8) + ', ' + date_val.substring(0,4);
-		var opponent = $('#s2id_acf-field_54f2a27b9830c .select2-chosen').text();
-		var type = $('#s2id_acf-field_54f2a3cb13c7f .select2-chosen').text();
+		var opponent = $('#select2-chosen-3').text();
+		var type = $('#select2-chosen-5').text();
+		// console.log(date_string, opponent, type);
 		
-		$('#title').val( date_string + ' - ' + opponent + ' - ' + type );
+		if ( date_val !== '' && 
+			 opponent !== 'String' &&
+			 type !== 'String' ) {
+			$('#title').val( date_string + ' - ' + opponent + ' - ' + type );
+		}
 	}
 	//need the inverse, to read the title and populate the custom fields dynamically...
 	
