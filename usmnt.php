@@ -26,25 +26,27 @@
 			
 			//check players array for player ids
 			$players = get_field('players');
-			foreach($players as $player) {
-				
-				//but only when the update players checkbox is ticked.
-				if ( get_field('update_players_on_save') ) {
-					//increment caps for that player
-					$current_player_caps = intval(get_field('caps', $player)) + 1;
-					//field_54f28167cd525
-					update_field('field_54f28167cd525', $current_player_caps, $player);
+			if ( is_array( $players ) ) {
+				foreach($players as $player) {
+					
+					//but only when the update players checkbox is ticked.
+					if ( get_field('update_players_on_save') ) {
+						//increment caps for that player
+						$current_player_caps = intval(get_field('caps', $player)) + 1;
+						//field_54f28167cd525
+						update_field('field_54f28167cd525', $current_player_caps, $player);
+					}
+					//add match to players list of matches - ALWAYS
+					//field_54f296d36fa8b
+					$current_player_matches = get_field('matches', $player);
+					if ( is_array($current_player_matches) ) {
+						array_push($current_player_matches, $post->ID);
+					}
+					else {
+						$current_player_matches[0] = $post->ID;
+					}
+					update_field('field_54f296d36fa8b', $current_player_matches, $player);
 				}
-				//add match to players list of matches - ALWAYS
-				//field_54f296d36fa8b
-				$current_player_matches = get_field('matches', $player);
-				if ( is_array($current_player_matches) ) {
-					array_push($current_player_matches, $post->ID);
-				}
-				else {
-					$current_player_matches[0] = $post->ID;
-				}
-				update_field('field_54f296d36fa8b', $current_player_matches, $player);
 			}
 			
 			//check goals repeater for player ids
@@ -72,50 +74,52 @@
 			
 			//check coach and update their stats too!
 			$coachs = get_field('coach');
-			foreach($coachs as $coach) {
-				
-				//but only when the update players checkbox is ticked.
-				if ( get_field('update_players_on_save') ) {
-					//increment caps for that coach
-					$current_coach_caps = intval( get_field('caps', $coach) ) + 1;
-					//field_559d4d607f03b
-					update_field('field_559d4d607f03b', $current_coach_caps, $coach);
+			if ( is_array( $coachs ) ) {
+				foreach($coachs as $coach) {
 					
-					//increment win/lose/draw value depending on if the match was a win/lose/draw
-					$result_terms = get_the_terms( $post->ID, 'result');
-					$results = [];
-					foreach ( $result_terms as $term ) {
-						$results[] = $term->name;
-						// var_dump($term);
-						$result_permalink = get_term_link( $term );
-					}
-					$result = $results[0];
-					// update_field('field_54f5c1e6ee5e2', 'new save ' . $result);
-					if ( $result == 'W' ) {
-						$current_coach_wins = intval( get_field('wins', $coach) ) + 1;
-						update_field('field_559d4d607f0ba', $current_coach_wins, $coach);
-					}
-					if ( $result == 'L' ){
-						$current_coach_loses = intval( get_field('loses', $coach) ) + 1;
-						update_field('field_559d4da90ee58', $current_coach_loses, $coach);
-					}
-					if ( $result == 'D' ){
-						$current_coach_draws = intval( get_field('draws', $coach) ) + 1;
-						update_field('field_559d4eed2148c', $current_coach_draws, $coach);
+					//but only when the update players checkbox is ticked.
+					if ( get_field('update_players_on_save') ) {
+						//increment caps for that coach
+						$current_coach_caps = intval( get_field('caps', $coach) ) + 1;
+						//field_559d4d607f03b
+						update_field('field_559d4d607f03b', $current_coach_caps, $coach);
+						
+						//increment win/lose/draw value depending on if the match was a win/lose/draw
+						$result_terms = get_the_terms( $post->ID, 'result');
+						$results = [];
+						foreach ( $result_terms as $term ) {
+							$results[] = $term->name;
+							// var_dump($term);
+							$result_permalink = get_term_link( $term );
+						}
+						$result = $results[0];
+						// update_field('field_54f5c1e6ee5e2', 'new save ' . $result);
+						if ( $result == 'W' ) {
+							$current_coach_wins = intval( get_field('wins', $coach) ) + 1;
+							update_field('field_559d4d607f0ba', $current_coach_wins, $coach);
+						}
+						if ( $result == 'L' ){
+							$current_coach_loses = intval( get_field('loses', $coach) ) + 1;
+							update_field('field_559d4da90ee58', $current_coach_loses, $coach);
+						}
+						if ( $result == 'D' ){
+							$current_coach_draws = intval( get_field('draws', $coach) ) + 1;
+							update_field('field_559d4eed2148c', $current_coach_draws, $coach);
+						}
+						
 					}
 					
+					//add match to coachs list of matches - ALWAYS
+					//field_559d4d607f22c
+					$current_coach_matches = get_field('matches', $coach);
+					if ( is_array($current_coach_matches) ) {
+						array_push($current_coach_matches, $post->ID);
+					}
+					else {
+						$current_coach_matches[0] = $post->ID;
+					}
+					update_field('field_559d4d607f22c', $current_coach_matches, $coach);
 				}
-				
-				//add match to coachs list of matches - ALWAYS
-				//field_559d4d607f22c
-				$current_coach_matches = get_field('matches', $coach);
-				if ( is_array($current_coach_matches) ) {
-					array_push($current_coach_matches, $post->ID);
-				}
-				else {
-					$current_coach_matches[0] = $post->ID;
-				}
-				update_field('field_559d4d607f22c', $current_coach_matches, $coach);
 			}
 			
 			if ( get_field('update_players_on_save') ) {
