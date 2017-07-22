@@ -1,14 +1,14 @@
 <?php
 /**
  * @package USMNT
- * @version 1.0
+ * @version 1.0.1
  */
 /*
  * Plugin Name: USMNT Functionality Plugin
  * Plugin URI:        http://app.circlcube.com/usmnt
  * Description:       Functionality for USMNT App
  * Author:            Evan Mullins
- * Version:           1.0
+ * Version:           1.0.1
  * License:           GNU General Public License v2
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
  * GitHub Plugin URI: https://github.com/circlecube/usmnt-plugin
