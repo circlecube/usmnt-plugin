@@ -216,7 +216,7 @@
 		// if( $hook != 'edit.php' ) 
 				// return;
 		 
-			wp_enqueue_script( 'usmnt_js', plugins_url( 'usmnt/js/script.js' , dirname(__FILE__) ) );
+			wp_enqueue_script( 'usmnt_js', plugin_dir_url( __FILE__ ) . 'js/script.js');
 			
 	}
 	// Hook into the 'admin_enqueue_scripts' action
@@ -224,7 +224,7 @@
 	
 	//load custom css for admin style tweaks
 	function usmnt_styles() {
-		wp_enqueue_style( 'usmnt_css', plugins_url( 'usmnt/css/styles.css', dirname(__FILE__) ) );
+		wp_enqueue_style( 'usmnt_css', plugin_dir_url( __FILE__ ) . 'css/styles.css' );
 	}
 	add_action( 'admin_enqueue_scripts', 'usmnt_styles' );
 
